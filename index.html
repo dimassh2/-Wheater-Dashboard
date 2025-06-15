@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poker Pixel Weather Dashboard</title>
+    
+    <!-- Google Fonts: Press Start 2P -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <!-- Link ke file CSS eksternal -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="poker-table max-w-7xl mx-auto">
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl">WEATHER STATION</h1>
+            <p class="text-sm text-yellow-300" id="timestamp">Connecting...</p>
+        </header>
+
+        <!-- Kartu Kondisi Cuaca -->
+        <div class="dealer-card flex flex-col items-center justify-center text-center mb-8" id="weather-condition-card">
+            <div id="icon-container" class="w-20 h-20 mb-4"></div>
+            <h2 class="text-4xl" id="weather-condition-text">LOADING</h2>
+        </div>
+
+        <!-- Grid Kartu Data -->
+        <main class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+            <div class="playing-card card-temp"><div class="card-content"><div class="card-label">SUHU</div><div class="flex items-baseline"><span id="temp-value" class="card-value">--</span><span class="card-unit">°C</span></div></div></div>
+            <div class="playing-card card-humidity"><div class="card-content"><div class="card-label">LEMBAP</div><div class="flex items-baseline"><span id="humidity-value" class="card-value">--</span><span class="card-unit">%</span></div></div></div>
+            <div class="playing-card card-pressure"><div class="card-content"><div class="card-label">TEKANAN</div><div class="flex items-baseline"><span id="pressure-value" class="card-value">----</span><span class="card-unit text-sm">hPa</span></div></div></div>
+            <div class="playing-card card-altitude"><div class="card-content"><div class="card-label">MDPL</div><div class="flex items-baseline"><span id="altitude-value" class="card-value">----</span><span class="card-unit text-sm">m</span></div></div></div>
+        </main>
+
+        <!-- Grid Grafik Real-time -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <div class="chart-container h-80">
+                <h3 class="chart-title">REAL-TIME: SUHU & LEMBAP</h3>
+                <canvas id="chart-temp-humidity"></canvas>
+            </div>
+            <div class="chart-container h-80">
+                <h3 class="chart-title">REAL-TIME: TEKANAN & MDPL</h3>
+                <canvas id="chart-pressure-altitude"></canvas>
+            </div>
+        </div>
+        
+        <!-- Tombol untuk Riwayat -->
+        <div class="text-center">
+            <button id="history-button" class="action-button">LIHAT RIWAYAT</button>
+        </div>
+    </div>
+
+    <!-- Modal untuk Riwayat -->
+    <div id="history-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2 class="text-2xl mb-4 text-center">RIWAYAT DATA SENSOR</h2>
+            
+            <!-- Filter Tanggal -->
+            <div class="filter-controls mb-6 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <label for="history-date-picker" class="text-lg">Pilih Tanggal:</label>
+                <input type="date" id="history-date-picker" class="date-picker">
+                <button id="filter-history-button" class="action-button text-sm">TAMPILKAN</button>
+            </div>
+
+            <!-- Tabel Riwayat Data -->
+            <div class="history-table-container mb-8">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Waktu</th>
+                            <th>Kondisi</th>
+                            <th>Suhu</th>
+                            <th>Lembap</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-table-body">
+                        <!-- Data akan diisi oleh JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Grafik Riwayat -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="chart-container h-64"><h3 class="chart-title">GRAFIK RIWAYAT 1</h3><canvas id="history-chart-1"></canvas></div>
+                <div class="chart-container h-64"><h3 class="chart-title">GRAFIK RIWAYAT 2</h3><canvas id="history-chart-2"></canvas></div>
+            </div>
+            <button id="close-modal-button" class="action-button mt-8">TUTUP</button>
+        </div>
+    </div>
+
+    <!-- Pustaka pihak ketiga (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Skrip Aplikasi -->
+    <script src="api/sensor.js"></script>
+    <script src="app.js"></script>
+
+</body>
+</html>
